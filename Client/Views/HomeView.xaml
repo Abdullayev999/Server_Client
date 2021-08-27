@@ -1,0 +1,101 @@
+﻿<UserControl x:Class="Client.Views.HomeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Client.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Template="{StaticResource PopupContentClassicTemplate}"  >
+    <UserControl.Background>
+        <ImageBrush ImageSource="Resources/background.jpg"/>
+    </UserControl.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition/>  
+        </Grid.RowDefinitions>
+
+        <DockPanel>
+            <Button Style="{StaticResource MaterialDesignRaisedLightButton}"  Command="{Binding LogOutCommand}" DockPanel.Dock="Right" Cursor="Hand">Log out</Button>
+            <Label  VerticalAlignment="Center"  DockPanel.Dock="Left" FontSize="30" Content="{Binding User.Username}" ContentStringFormat="Username : {0}"/>
+            <Label VerticalAlignment="Center" FontSize="30" HorizontalAlignment="Center">Client</Label>
+           
+        </DockPanel>
+        
+
+        
+        <Grid Visibility="{Binding VisMain}" Grid.Row="1" Background="AliceBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="180" MaxWidth="450" Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.RowDefinitions> 
+                    <RowDefinition Height="1*"/> 
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <Label FontSize="17" Grid.Row="1" FontWeight="Bold" HorizontalAlignment="Center">Users list</Label>
+                <DockPanel Grid.Row="3">
+                    <Button Style="{StaticResource MaterialDesignRaisedLightButton}"  Command="{Binding AddGroupCommand}" DockPanel.Dock="Right">+</Button>
+                    <Label FontSize="17"  FontWeight="Bold"  HorizontalAlignment="Center">Group list</Label>
+                </DockPanel>
+
+
+                <Button  Command="{Binding AllChatCommand}" Width="150"  Background="LightBlue" Grid.Row="0">
+                    <Button.Content>
+                        <DockPanel>
+                            <Image  Width="40" Height="40" Source="Resources/allchat.png" DockPanel.Dock="Left"></Image>
+                            <Label  HorizontalAlignment="Center" VerticalAlignment="Center"  Content="All Chat"></Label>
+                        </DockPanel>
+                    </Button.Content>
+                </Button>
+
+
+                <ListBox Style="{StaticResource MaterialDesignCardsListBox}" SelectedItem="{Binding SelectUser,UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" ItemsSource="{Binding Users, UpdateSourceTrigger=PropertyChanged}" Background="Wheat">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+
+                                <Image Width="50" Height="50" Source="Resources/profil.jpg" DockPanel.Dock="Left"></Image>
+                                <Label Padding="10 0" HorizontalAlignment="Center" VerticalAlignment="Center"   Content="{Binding Username}"></Label>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <ListBox Style="{StaticResource MaterialDesignCardsListBox}" SelectedItem="{Binding SelectGroup,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Groups}" Background="Wheat" Grid.Row="4">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel>
+
+                                <Image Width="50" Height="50" Source="Resources/images.jpg" DockPanel.Dock="Left"></Image>
+                                <Label Padding="10 0" HorizontalAlignment="Center" VerticalAlignment="Center"   Content="{Binding Name}"></Label>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+            <GridSplitter HorizontalAlignment="Center" Background="Black"  Style="{StaticResource MaterialDesignGridRowHeaderGripper}" Width="5" Height="300" Grid.Column="1"></GridSplitter>
+            <DockPanel Grid.Column="2"> 
+                <DockPanel Height="40" DockPanel.Dock="Bottom">
+                    <Button Style="{StaticResource MaterialDesignRaisedLightButton}"  Command="{Binding SendCommand}" DockPanel.Dock="Right">Send</Button>
+                    <Button Style="{StaticResource MaterialDesignRaisedLightButton}"  Command="{Binding AddFileCommand}" DockPanel.Dock="Right">Send File</Button>
+                    <TextBox BorderBrush="Black" BorderThickness="1"   Text="{Binding Messages,UpdateSourceTrigger=PropertyChanged}"  FontSize="25"></TextBox>
+                </DockPanel>
+                <ScrollViewer>
+                    <ListBox Style="{StaticResource MaterialDesignFilterChipOutlineListBox}" ItemsSource="{Binding Chat,UpdateSourceTrigger=PropertyChanged}"/>
+                </ScrollViewer>
+            </DockPanel>
+        </Grid>
+
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Bottom"  Visibility="{Binding VisSetting}">
+            <Button Style="{StaticResource MaterialDesignRaisedLightButton}"  DockPanel.Dock="Bottom" Height="45"   FontSize="20" Content="Connected" Command="{Binding ConnectCommand}" Margin="10" Cursor="Hand"/>
+        </StackPanel> 
+    </Grid>
+</UserControl>
